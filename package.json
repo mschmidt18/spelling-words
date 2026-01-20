@@ -1,0 +1,9 @@
+{
+  "name": "spelling-words",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@ai-sdk/google": "^1.0.0",
+    "ai": "^4.0.0"
+  }
+}

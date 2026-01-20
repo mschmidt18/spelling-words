@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Word Practice</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Camera View -->
+        <div id="camera-view" class="view">
+            <h1>Spelling Word Practice</h1>
+            <p class="instruction">Take a picture of your spelling word sheet</p>
+
+            <div id="camera-container">
+                <video id="camera-preview" autoplay playsinline></video>
+                <canvas id="capture-canvas" style="display: none;"></canvas>
+            </div>
+
+            <div class="button-group">
+                <button id="capture-btn" class="primary-btn">Capture Image</button>
+                <label for="file-upload" class="secondary-btn">Upload Image</label>
+                <input type="file" id="file-upload" accept="image/*" capture="environment" style="display: none;">
+            </div>
+
+            <div id="camera-error" class="error-message" style="display: none;"></div>
+        </div>
+
+        <!-- Processing View -->
+        <div id="processing-view" class="view" style="display: none;">
+            <h1>Processing Image</h1>
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p id="processing-status">Initializing OCR...</p>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <p id="progress-text" class="progress-text">0%</p>
+            </div>
+        </div>
+
+        <!-- Confirmation View -->
+        <div id="confirmation-view" class="view" style="display: none;">
+            <h1>Words Found</h1>
+            <p class="instruction">Review the extracted words below</p>
+
+            <div id="word-count" class="word-count"></div>
+
+            <div id="word-list-container" class="word-list-container"></div>
+
+            <div class="button-group">
+                <button id="begin-practice-btn" class="primary-btn">Begin Practice</button>
+                <button id="retake-btn" class="secondary-btn">Retake Picture</button>
+            </div>
+
+            <div id="confirmation-warning" class="warning-message" style="display: none;"></div>
+        </div>
+
+        <!-- Practice View -->
+        <div id="practice-view" class="view" style="display: none;">
+            <h1>Practice Session</h1>
+
+            <div id="word-counter" class="word-counter">Word 1 of 0</div>
+
+            <div class="practice-container">
+                <button id="speak-word-btn" class="speak-btn">Speak Word</button>
+                <button id="repeat-word-btn" class="secondary-btn" disabled>Repeat Word</button>
+                <div id="word-display" class="word-display" style="display: none;"></div>
+            </div>
+
+            <div class="button-group">
+                <button id="new-sheet-btn" class="secondary-btn">New Sheet</button>
+            </div>
+
+            <div id="practice-message" class="info-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/camera.js"></script>
+    <script src="js/ocr.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/practice.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

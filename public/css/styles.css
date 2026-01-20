@@ -1,0 +1,316 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* View Container */
+.view {
+    padding: 2rem;
+    min-height: 400px;
+}
+
+h1 {
+    color: #667eea;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.instruction {
+    text-align: center;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+/* Camera View */
+#camera-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+#camera-preview {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+button, .secondary-btn {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 44px;
+    text-align: center;
+    display: block;
+}
+
+.primary-btn {
+    background: #667eea;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+
+.primary-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.secondary-btn {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    text-decoration: none;
+}
+
+.secondary-btn:hover {
+    background: #f0f4ff;
+}
+
+.speak-btn {
+    background: #10b981;
+    color: white;
+    font-size: 1.5rem;
+    padding: 2rem;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.speak-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.speak-btn:active {
+    transform: scale(0.98);
+}
+
+/* Loading Spinner */
+.loading-container {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#processing-status {
+    color: #666;
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #667eea;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Confirmation View */
+.word-count {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #10b981;
+    margin-bottom: 1.5rem;
+}
+
+.word-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.word-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+}
+
+.word-item {
+    background: white;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    text-align: center;
+    font-weight: 500;
+    color: #333;
+    border: 1px solid #e5e7eb;
+}
+
+/* Practice View */
+.word-counter {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.practice-container {
+    text-align: center;
+}
+
+.word-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Messages */
+.error-message, .warning-message, .info-message {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.warning-message {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fcd34d;
+}
+
+.info-message {
+    background: #dbeafe;
+    color: #2563eb;
+    border: 1px solid #93c5fd;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .view {
+        padding: 3rem;
+    }
+
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    .button-group {
+        flex-direction: row;
+    }
+
+    button, .secondary-btn {
+        flex: 1;
+    }
+
+    .word-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .primary-btn {
+        border: 2px solid #000;
+    }
+
+    .word-item {
+        border: 2px solid #333;
+    }
+}
