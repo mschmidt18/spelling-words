@@ -26,13 +26,6 @@ const SpeechModule = (function() {
     function loadVoices() {
         voices = synth.getVoices();
 
-        // Log available voices for debugging
-        console.log('Available voices:', voices.length);
-        console.log('Voice list:');
-        voices.forEach((voice, index) => {
-            console.log(`  ${index + 1}. ${voice.name} (${voice.lang}) ${voice.default ? '[DEFAULT]' : ''}`);
-        });
-
         // Sort voices: prioritize high-quality English voices
         voices.sort((a, b) => {
             // Check if voice is English
