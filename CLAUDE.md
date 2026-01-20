@@ -122,7 +122,7 @@ Speech API → Voice selection (quality scoring) → TTS output
 - "Capture Image" button uses `<input type="file" capture="environment">` to launch native camera
 - "Upload Image" button uses `<input type="file">` to open photo album/file picker
 - Both paths apply identical preprocessing: Brightness +10, Contrast +50 via pixel manipulation
-- Max resolution capped at 1920px (performance)
+- Max resolution capped at 1280px, output as JPEG with 0.8 quality (keeps payload under Vercel's 4.5MB limit)
 
 ## Backend API
 

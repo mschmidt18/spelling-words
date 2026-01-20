@@ -47,8 +47,9 @@ const CameraModule = (function() {
                 // Create temporary canvas for image processing
                 const tempCanvas = document.createElement('canvas');
 
-                // Limit resolution for faster processing
-                const maxDimension = 1920;
+                // Limit resolution for faster processing and smaller payload
+                // 1280px is sufficient for OCR and keeps file size under Vercel's 4.5MB limit
+                const maxDimension = 1280;
                 let width = img.width;
                 let height = img.height;
 
@@ -71,8 +72,8 @@ const CameraModule = (function() {
                 // Apply preprocessing
                 preprocessImage(context, width, height);
 
-                // Get image data
-                const imageData = tempCanvas.toDataURL('image/png');
+                // Get image data as JPEG with 0.8 quality for smaller file size
+                const imageData = tempCanvas.toDataURL('image/jpeg', 0.8);
 
                 // Trigger callback
                 if (onCaptureCallback) {
