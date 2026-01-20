@@ -157,6 +157,17 @@ Serverless function that proxies Gemini Vision API using `gemini-2.5-flash` mode
 
 **Error handling:** Maps API errors to user-actionable messages (401=invalid key, 429=quota exceeded).
 
+**Security:**
+- **Origin validation:** Only requests from allowed origins are accepted. Configure via `ALLOWED_ORIGINS` env var (comma-separated). Defaults to localhost for development. Supports wildcards (e.g., `*.vercel.app`).
+- **Rate limiting:** 10 requests per minute per IP (in-memory, per-instance). Returns 429 with `retryAfter` field when exceeded.
+- **CORS:** Strict CORS headers only allow configured origins.
+
+Rate limit constants are at the top of `api/extract-words.js`:
+```javascript
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10;
+```
+
 ## Important Implementation Details
 
 ### Word Counter Behavior

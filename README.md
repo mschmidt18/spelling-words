@@ -7,6 +7,7 @@ A simple single-page web application that uses camera capture and AI vision to e
 - Camera capture or file upload for spelling word sheets
 - **AI-powered OCR using Google Gemini Vision API** for accurate word extraction
 - **Secure backend** - API key stored server-side, not exposed to browser
+- **API protection** - Origin validation and rate limiting to prevent abuse
 - **Enhanced text-to-speech** with optimized voice selection for clarity
 - **Repeat button** to hear the current word again
 - Random word selection with no repeats until all words used
@@ -131,9 +132,9 @@ The Gemini Vision API analyzes the image and extracts:
 
 2. Connect the repository to [Vercel](https://vercel.com)
 
-3. Add environment variable in Vercel dashboard:
-   - Name: `GOOGLE_GENERATIVE_AI_API_KEY`
-   - Value: Your Gemini API key
+3. Add environment variables in Vercel dashboard:
+   - `GOOGLE_GENERATIVE_AI_API_KEY`: Your Gemini API key
+   - `ALLOWED_ORIGINS`: Your production URL (e.g., `https://spelling-words.vercel.app`)
 
 4. Deploy
 
@@ -155,6 +156,15 @@ Vercel automatically:
 - You may have reached your free tier limit
 - Check your usage at [Google AI Studio](https://makersuite.google.com)
 - Wait for your quota to reset or upgrade your plan
+
+**"Too many requests"**
+- Rate limit is 10 requests per minute per IP
+- Wait a minute and try again
+
+**"Forbidden: Unauthorized origin"**
+- The `ALLOWED_ORIGINS` environment variable doesn't include your domain
+- For local dev: Defaults allow localhost:3000
+- For production: Add your Vercel URL to `ALLOWED_ORIGINS`
 
 ### Camera Not Working
 - Ensure you're accessing via HTTPS or localhost
