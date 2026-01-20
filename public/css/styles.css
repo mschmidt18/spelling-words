@@ -45,24 +45,6 @@ h1 {
     font-size: 1rem;
 }
 
-/* Camera View */
-#camera-container {
-    position: relative;
-    width: 100%;
-    background: #000;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-}
-
-#camera-preview {
-    width: 100%;
-    height: auto;
-    display: block;
-    max-height: 400px;
-    object-fit: cover;
-}
-
 /* Buttons */
 .button-group {
     display: flex;
@@ -70,7 +52,7 @@ h1 {
     gap: 1rem;
 }
 
-button, .secondary-btn {
+button, .primary-btn, .secondary-btn {
     padding: 1rem 2rem;
     font-size: 1.125rem;
     font-weight: 600;

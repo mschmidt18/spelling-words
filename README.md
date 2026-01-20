@@ -54,9 +54,9 @@ If deployed to Vercel, just visit the URL. No setup required for end users.
 ### Using the App
 
 1. **Capture Image**
-   - Allow camera access when prompted
-   - Point camera at spelling word sheet
-   - Click "Capture Image" or use "Upload Image" button
+   - Click "Capture Image" to launch your device's camera
+   - Take a photo of your spelling word sheet
+   - Or use "Upload Image" to select from your photo album/files
 
 2. **Review Words**
    - The Gemini Vision API will process the image (typically 1-3 seconds)
@@ -78,7 +78,7 @@ If deployed to Vercel, just visit the URL. No setup required for end users.
 - **Vercel AI SDK** (`@ai-sdk/google`) for Gemini API integration
 - **Google Gemini Vision API (gemini-1.5-flash)** for OCR
 - Web Speech API for text-to-speech with optimized voice selection
-- MediaDevices API for camera access
+- Native file input with `capture` attribute for camera access
 
 ### Project Structure
 
@@ -103,9 +103,9 @@ spelling-words/
 
 ### Browser Compatibility
 - Chrome/Edge: Full support
-- Safari: Requires HTTPS or localhost for camera
+- Safari: Full support
 - Firefox: Full support
-- Mobile browsers: Generally well supported
+- Mobile browsers: Full support (launches native camera app)
 
 ### Word Extraction
 The Gemini Vision API analyzes the image and extracts:
@@ -167,9 +167,9 @@ Vercel automatically:
 - For production: Add your Vercel URL to `ALLOWED_ORIGINS`
 
 ### Camera Not Working
-- Ensure you're accessing via HTTPS or localhost
-- Check browser camera permissions
-- Use "Upload Image" as fallback
+- On mobile, "Capture Image" should launch your native camera app
+- On desktop, it opens a file picker instead
+- Use "Upload Image" to select from your photo album/files
 
 ### No Words Detected
 - Ensure good lighting when capturing image

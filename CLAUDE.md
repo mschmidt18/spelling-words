@@ -65,7 +65,7 @@ The app uses an **ES6 class orchestrator** pattern where `app.js` coordinates al
 
 ```
 App (app.js) - ES6 class orchestrator, exposed as window.app
-├─> CameraModule (camera.js) - Provides callbacks: onCapture(imageData), onError(message)
+├─> CameraModule (camera.js) - Handles file inputs for capture/upload, provides callbacks: onCapture(imageData), onError(message)
 ├─> OCRModule (ocr.js) - Returns Promise<string[]>, calls /api/extract-words
 ├─> PracticeSession (practice.js) - Class-based state management
 └─> SpeechModule (speech.js) - Provides speak(word, onSuccess, onError)
@@ -117,9 +117,11 @@ Speech API → Voice selection (quality scoring) → TTS output
 - Configured: rate=0.9, pitch=1.1 for clarity
 - Cancels any in-flight speech before starting new
 
-**CameraModule preprocessing**
-- Applied to both camera captures and file uploads
-- Brightness +10, Contrast +50 via pixel manipulation
+**CameraModule**
+- Uses native file inputs (no live video preview or getUserMedia)
+- "Capture Image" button uses `<input type="file" capture="environment">` to launch native camera
+- "Upload Image" button uses `<input type="file">` to open photo album/file picker
+- Both paths apply identical preprocessing: Brightness +10, Contrast +50 via pixel manipulation
 - Max resolution capped at 1920px (performance)
 
 ## Backend API
@@ -235,7 +237,7 @@ When making changes, manually test:
 
 ## Browser Compatibility Notes
 
-**Camera access:** Requires HTTPS or localhost (security restriction)
+**Image capture:** Uses native file input with `capture="environment"` attribute. On mobile, this launches the native camera app. On desktop, it opens a file picker. No special permissions required.
 
 **Speech API:** Voice availability varies by browser/OS. Always check console logs to see what voices are available.
 

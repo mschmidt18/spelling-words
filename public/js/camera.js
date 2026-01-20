@@ -1,10 +1,8 @@
 // Camera module for image capture
 const CameraModule = (function() {
-    let videoElement = null;
     let canvasElement = null;
-    let captureButton = null;
-    let fileUpload = null;
-    let stream = null;
+    let captureInput = null;
+    let uploadInput = null;
     let onCaptureCallback = null;
     let onErrorCallback = null;
 
@@ -12,113 +10,21 @@ const CameraModule = (function() {
         onCaptureCallback = onCapture;
         onErrorCallback = onError;
 
-        videoElement = document.getElementById('camera-preview');
         canvasElement = document.getElementById('capture-canvas');
-        captureButton = document.getElementById('capture-btn');
-        fileUpload = document.getElementById('file-upload');
+        captureInput = document.getElementById('capture-input');
+        uploadInput = document.getElementById('upload-input');
 
-        // Set up event listeners
-        if (captureButton) {
-            captureButton.addEventListener('click', captureImage);
+        // Set up event listeners for both file inputs
+        if (captureInput) {
+            captureInput.addEventListener('change', handleFileInput);
         }
 
-        if (fileUpload) {
-            fileUpload.addEventListener('change', handleFileUpload);
-        }
-
-        // Start camera
-        startCamera();
-    }
-
-    async function startCamera() {
-        try {
-            const constraints = {
-                video: {
-                    facingMode: 'environment', // Use back camera on mobile
-                    width: { ideal: 1920 },
-                    height: { ideal: 1080 }
-                }
-            };
-
-            stream = await navigator.mediaDevices.getUserMedia(constraints);
-
-            if (videoElement) {
-                videoElement.srcObject = stream;
-                videoElement.play();
-            }
-
-            // Enable capture button
-            if (captureButton) {
-                captureButton.disabled = false;
-            }
-        } catch (error) {
-            console.error('Camera access error:', error);
-            handleCameraError(error);
+        if (uploadInput) {
+            uploadInput.addEventListener('change', handleFileInput);
         }
     }
 
-    function handleCameraError(error) {
-        let errorMessage = 'Camera access failed. ';
-
-        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-            errorMessage += 'Please allow camera access or use the "Upload Image" button.';
-        } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-            errorMessage += 'No camera found. Please use the "Upload Image" button.';
-        } else {
-            errorMessage += 'Please use the "Upload Image" button.';
-        }
-
-        if (onErrorCallback) {
-            onErrorCallback(errorMessage);
-        }
-
-        // Hide video preview if camera failed
-        if (videoElement) {
-            videoElement.style.display = 'none';
-        }
-
-        // Disable capture button
-        if (captureButton) {
-            captureButton.disabled = true;
-        }
-    }
-
-    function captureImage() {
-        if (!videoElement || !canvasElement) {
-            return;
-        }
-
-        // Set canvas dimensions to match video
-        const videoWidth = videoElement.videoWidth;
-        const videoHeight = videoElement.videoHeight;
-
-        if (videoWidth === 0 || videoHeight === 0) {
-            if (onErrorCallback) {
-                onErrorCallback('Camera not ready. Please wait a moment and try again.');
-            }
-            return;
-        }
-
-        canvasElement.width = videoWidth;
-        canvasElement.height = videoHeight;
-
-        // Draw video frame to canvas
-        const context = canvasElement.getContext('2d');
-        context.drawImage(videoElement, 0, 0, videoWidth, videoHeight);
-
-        // Apply preprocessing
-        preprocessImage(context, videoWidth, videoHeight);
-
-        // Get image data
-        const imageData = canvasElement.toDataURL('image/png');
-
-        // Trigger callback with captured image
-        if (onCaptureCallback) {
-            onCaptureCallback(imageData);
-        }
-    }
-
-    function handleFileUpload(event) {
+    function handleFileInput(event) {
         const file = event.target.files[0];
 
         if (!file) {
@@ -138,7 +44,7 @@ const CameraModule = (function() {
             const img = new Image();
 
             img.onload = function() {
-                // Create temporary canvas for uploaded image
+                // Create temporary canvas for image processing
                 const tempCanvas = document.createElement('canvas');
 
                 // Limit resolution for faster processing
@@ -212,28 +118,13 @@ const CameraModule = (function() {
         context.putImageData(imageData, 0, 0);
     }
 
-    function stopCamera() {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            stream = null;
-        }
-
-        if (videoElement) {
-            videoElement.srcObject = null;
-        }
-    }
-
     function restart() {
-        stopCamera();
-
-        // Reset file input
-        if (fileUpload) {
-            fileUpload.value = '';
+        // Reset file inputs
+        if (captureInput) {
+            captureInput.value = '';
         }
-
-        // Show video preview again
-        if (videoElement) {
-            videoElement.style.display = 'block';
+        if (uploadInput) {
+            uploadInput.value = '';
         }
 
         // Clear any error messages
@@ -241,14 +132,11 @@ const CameraModule = (function() {
         if (errorElement) {
             errorElement.style.display = 'none';
         }
-
-        // Restart camera
-        startCamera();
     }
 
     return {
         init,
         restart,
-        stopCamera
+        stopCamera: function() {} // No-op for backwards compatibility
     };
 })();

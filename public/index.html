@@ -13,15 +13,13 @@
             <h1>Spelling Word Practice</h1>
             <p class="instruction">Take a picture of your spelling word sheet</p>
 
-            <div id="camera-container">
-                <video id="camera-preview" autoplay playsinline></video>
-                <canvas id="capture-canvas" style="display: none;"></canvas>
-            </div>
+            <canvas id="capture-canvas" style="display: none;"></canvas>
 
             <div class="button-group">
-                <button id="capture-btn" class="primary-btn">Capture Image</button>
-                <label for="file-upload" class="secondary-btn">Upload Image</label>
-                <input type="file" id="file-upload" accept="image/*" capture="environment" style="display: none;">
+                <label for="capture-input" class="primary-btn">Capture Image</label>
+                <input type="file" id="capture-input" accept="image/*" capture="environment" style="display: none;">
+                <label for="upload-input" class="secondary-btn">Upload Image</label>
+                <input type="file" id="upload-input" accept="image/*" style="display: none;">
             </div>
 
             <div id="camera-error" class="error-message" style="display: none;"></div>
